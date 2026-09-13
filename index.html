@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1B1917" />
+    <meta name="description" content="Catálogo GenStore: elegí tu termo, comprobá disponibilidad y comprá por WhatsApp." />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; frame-ancestors 'none'; img-src 'self' data: https:; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://oynglftyzyzxghvnkwxb.supabase.co wss://oynglftyzyzxghvnkwxb.supabase.co; upgrade-insecure-requests" />
+    <title>GenStore | Termos para llevar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#catalogo">Ir al catálogo</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#top" aria-label="GenStore, inicio"><span class="brand-mark"><img src="assets/brand/genstore-logo-transparent.png" alt="GenStore" /></span></a>
+        <nav class="header-actions" aria-label="Navegación principal">
+          <a class="nav-link" href="#catalogo">Catálogo</a>
+          <a class="nav-link nav-link--desktop" href="#como-comprar">Cómo comprar</a>
+          <button class="icon-button" id="open-admin" type="button" aria-label="Acceso administrativo" title="Acceso administrativo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm-8 7a8 8 0 0 1 16 0" /></svg></button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="kicker">Tu próximo compañero de ronda</p>
+            <h1 id="hero-title">Elegí. Consultá.<br />Llevátelo.</h1>
+            <p class="hero-lede">Termos y accesorios listos para acompañarte. Mirá las fotos, elegí tu modelo y cerrá la compra por WhatsApp.</p>
+            <div class="hero-actions">
+              <a class="button button--dark" href="#catalogo">Ver productos</a>
+              <a class="text-link" id="hero-whatsapp" href="#" target="_blank" rel="noopener noreferrer">Hablar con GenStore</a>
+            </div>
+            <ul class="hero-notes" aria-label="Beneficios"><li class="live-pill"><i></i><span id="sync-label">Conectando stock</span></li><li>Compra directa</li><li>Atención personal</li></ul>
+          </div>
+        </div>
+      </section>
+      <section class="curated-section" id="destacados" aria-labelledby="featured-title" hidden>
+        <div class="shell">
+          <div class="section-intro"><div><p class="kicker">Selección GenStore</p><h2 id="featured-title">Destacados</h2></div><p>Los modelos que elegimos para mostrarte primero.</p></div>
+          <div id="featured-grid" class="product-grid product-grid--curated"></div>
+        </div>
+      </section>
+      <section class="curated-section curated-section--offers" id="ofertas" aria-labelledby="offers-title" hidden>
+        <div class="shell">
+          <div class="section-intro"><div><p class="kicker">Oportunidades</p><h2 id="offers-title">Ofertas</h2></div><p>Precios especiales por tiempo limitado y sujetos a stock.</p></div>
+          <div id="offers-grid" class="product-grid product-grid--curated"></div>
+        </div>
+      </section>
+      <section class="catalog" id="catalogo" aria-labelledby="catalog-title">
+        <div class="shell">
+          <div class="section-intro"><div><p class="kicker">Catálogo</p><h2 id="catalog-title">Encontrá el tuyo</h2></div><p>Precio y disponibilidad a la vista. La compra se coordina directamente con nosotros.</p></div>
+          <div class="catalog-toolbar" aria-label="Filtros del catálogo">
+            <label class="search-field" for="product-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="sr-only">Buscar productos</span><input id="product-search" type="search" placeholder="Buscar por modelo, color o capacidad" autocomplete="off" /></label>
+            <div id="category-filters" class="filter-row" aria-label="Filtrar por categoría"></div>
+            <label class="stock-toggle"><input id="stock-only" type="checkbox" checked /><span>Solo disponibles</span></label>
+          </div>
+          <div class="catalog-status" aria-live="polite"><p id="results-count">Cargando productos…</p><p id="data-status"></p></div>
+          <div id="product-grid" class="product-grid" aria-busy="true"></div>
+          <div class="load-more-wrap"><button class="button button--dark" id="load-more" type="button" hidden>Mostrar más productos</button></div>
+          <div id="empty-state" class="empty-state" hidden><h3>No encontramos coincidencias</h3><p>Probá otra búsqueda o quitá el filtro de disponibilidad.</p><button class="text-link" id="clear-filters" type="button">Limpiar filtros</button></div>
+        </div>
+      </section>
+      <section class="how" id="como-comprar" aria-labelledby="how-title">
+        <div class="shell how-grid">
+          <div><p class="kicker">Simple de verdad</p><h2 id="how-title">De la vidriera a WhatsApp en tres pasos.</h2></div>
+          <ol class="steps"><li><span>1</span><div><strong>Elegí tu producto</strong><p>Filtrá por modelo y mirá las fotos.</p></div></li><li><span>2</span><div><strong>Consultá por WhatsApp</strong><p>El mensaje ya incluye el producto y el precio.</p></div></li><li><span>3</span><div><strong>Coordiná la entrega</strong><p>Te confirmamos disponibilidad y forma de envío.</p></div></li></ol>
+        </div>
+      </section>
+      <section class="closing-cta"><div class="shell closing-cta__inner"><h2>¿No sabés cuál elegir?</h2><p>Contanos qué uso le vas a dar y te recomendamos una opción.</p><a class="button button--light" id="closing-whatsapp" href="#" target="_blank" rel="noopener noreferrer">Pedir recomendación</a></div></section>
+    </main>
+    <footer class="site-footer"><div class="shell footer-grid"><div><img src="assets/brand/genstore-logo-transparent.png" alt="GenStore" /><p>Termos y accesorios elegidos para acompañar todos los días.</p></div><div><p class="footer-title">Seguinos</p><div id="social-links" class="social-links"></div></div><div><button class="footer-admin" id="open-admin-footer" type="button">Acceso administrativo</button><p>© <span id="year"></span> GenStore</p></div></div></footer>
+    <a id="whatsapp-floating" class="whatsapp-floating" href="#" target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.3-.1-1.2-.4-2.2-1.4-.8-.7-1.4-1.7-1.6-1.9-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4s1 2.8 1.1 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.6-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.1-.3-.2-.6-.3Z"/><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18.2a8.1 8.1 0 0 1-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3A8.2 8.2 0 1 1 20.2 12 8.2 8.2 0 0 1 12 20.2Z"/></svg></a>
+    <dialog id="product-dialog" class="product-dialog"><button class="dialog-close" type="button" data-close-dialog aria-label="Cerrar detalle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg></button><div class="dialog-layout"><div class="dialog-gallery"><div class="dialog-main-image"><img id="dialog-image" src="" alt="" /></div><div id="dialog-thumbs" class="dialog-thumbs"></div></div><div class="dialog-copy"><p id="dialog-category" class="kicker"></p><h2 id="dialog-title"></h2><p id="dialog-description" class="dialog-description"></p><p id="dialog-price" class="dialog-price"></p><p id="dialog-stock" class="stock-state"></p><a id="dialog-buy" class="button button--whatsapp" href="#" target="_blank" rel="noopener noreferrer">Comprar por WhatsApp</a></div></div></dialog>
+    <dialog id="admin-dialog" class="admin-dialog">
+      <button class="dialog-close" type="button" data-close-admin aria-label="Cerrar acceso administrativo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" /></svg></button>
+      <div class="admin-wrap">
+        <div id="admin-login">
+          <p class="kicker">Área privada</p><h2>Ingreso administrativo</h2>
+          <p class="admin-helper">Usá las credenciales de tu ERP. GenStore no guarda la contraseña en este sitio.</p>
+          <form id="admin-form" novalidate>
+            <label for="admin-email">Correo electrónico</label><input id="admin-email" name="email" type="email" autocomplete="username" required />
+            <label for="admin-password">Contraseña</label><input id="admin-password" name="password" type="password" autocomplete="current-password" minlength="8" required />
+            <button class="button button--dark" id="admin-submit" type="submit">Ingresar</button><p id="admin-error" class="form-message" role="alert"></p>
+          </form>
+        </div>
+        <div id="admin-dashboard" hidden>
+          <div class="admin-dashboard__head"><div><p class="kicker">Panel conectado</p><h2>Estado del catálogo</h2></div><button class="text-link" id="admin-logout" type="button">Cerrar sesión</button></div>
+          <div id="admin-metrics" class="admin-metrics"></div><p id="admin-updated" class="admin-helper"></p>
+          <section class="admin-merch" aria-labelledby="admin-merch-title">
+            <div><p class="kicker">Vidriera online</p><h3 id="admin-merch-title">Ordenar y promocionar</h3><p class="admin-helper">Arrastrá los productos o usá las flechas. También podés marcarlos como destacados o asignarles un precio de oferta.</p></div>
+            <label class="admin-product-search" for="admin-product-search">Buscar producto<input id="admin-product-search" type="search" placeholder="Nombre o categoría" autocomplete="off" /></label>
+            <div id="admin-product-order" class="admin-product-order" aria-live="polite"></div>
+            <div class="admin-save-bar"><p id="admin-merch-status" class="form-message" role="status" aria-live="polite">Sin cambios pendientes.</p><button class="button button--dark" id="admin-merch-save" type="button" disabled>Guardar cambios</button></div>
+          </section>
+          <section class="admin-media" aria-labelledby="admin-media-title">
+            <div><p class="kicker">Fotos de productos</p><h3 id="admin-media-title">Agregar imágenes</h3><p class="admin-helper">Elegí el producto y subí hasta 8 fotos por vez. La primera foto del producto será su portada.</p></div>
+            <form id="admin-image-form" novalidate>
+              <label for="admin-image-product">Producto</label>
+              <select id="admin-image-product" name="product" required></select>
+              <label class="admin-file-picker" for="admin-image-files">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" /></svg>
+                <span><strong>Seleccionar imágenes</strong><small>JPG, PNG, WebP o AVIF · máximo 5 MB cada una</small></span>
+              </label>
+              <input id="admin-image-files" name="images" type="file" accept="image/jpeg,image/png,image/webp,image/avif" multiple required />
+              <p id="admin-file-summary" class="admin-file-summary">Todavía no seleccionaste archivos.</p>
+              <button class="button button--dark" id="admin-image-submit" type="submit">Agregar imágenes</button>
+              <p id="admin-image-status" class="form-message" role="status" aria-live="polite"></p>
+            </form>
+            <div class="admin-current-images"><div class="admin-current-images__head"><strong>Imágenes publicadas</strong><span id="admin-image-count">0</span></div><div id="admin-image-list" class="admin-image-list"></div></div>
+          </section>
+          <p class="admin-note">El stock y los precios continúan administrándose en el ERP. Las fotos se publican directamente en el catálogo.</p>
+        </div>
+      </div>
+    </dialog>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
+    <script src="js/config.js"></script><script src="js/products.js"></script><script src="js/main.js"></script>
+  </body>
+</html>
