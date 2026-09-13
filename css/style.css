@@ -265,6 +265,8 @@ dialog::backdrop { background: rgba(27,25,23,.68); backdrop-filter: blur(6px); }
   .product-grid { gap: .55rem; }
   .product-card { border-radius: .9rem; }
   .product-card__media { aspect-ratio: 1 / 1.18; }
+  .product-card__media img:not(.product-card__fallback) { transform: scale(1.1); transform-origin: center bottom; }
+  .product-card:hover .product-card__media img:not(.product-card__fallback) { transform: scale(1.1); }
   .product-card__category, .product-card__promo, .product-card__stock { max-width: calc(100% - .9rem); padding: .24rem .38rem; overflow: hidden; font-size: .58rem; text-overflow: ellipsis; white-space: nowrap; }
   .product-card__category { left: .45rem; top: .45rem; }
   .product-card__promo { left: .45rem; right: auto; top: 2rem; }
