@@ -93,6 +93,11 @@
           <div id="admin-metrics" class="admin-metrics"></div><p id="admin-updated" class="admin-helper"></p>
           <section class="admin-merch" aria-labelledby="admin-merch-title">
             <div><p class="kicker">Vidriera online</p><h3 id="admin-merch-title">Ordenar y promocionar</h3><p class="admin-helper">Arrastrá los productos o usá las flechas. También podés marcarlos como destacados o asignarles un precio de oferta.</p></div>
+            <div id="admin-merch-scopes" class="admin-merch-scopes" aria-label="Elegir grupo de productos">
+              <button class="admin-scope-button" type="button" data-admin-scope="all" aria-pressed="true">Todos</button>
+              <button class="admin-scope-button" type="button" data-admin-scope="featured" aria-pressed="false">Destacados</button>
+              <button class="admin-scope-button" type="button" data-admin-scope="offers" aria-pressed="false">Ofertas</button>
+            </div>
             <label class="admin-product-search" for="admin-product-search">Buscar producto<input id="admin-product-search" type="search" placeholder="Nombre o categoría" autocomplete="off" /></label>
             <div id="admin-product-order" class="admin-product-order" aria-live="polite"></div>
             <div class="admin-save-bar"><p id="admin-merch-status" class="form-message" role="status" aria-live="polite">Sin cambios pendientes.</p><button class="button button--dark" id="admin-merch-save" type="button" disabled>Guardar cambios</button></div>

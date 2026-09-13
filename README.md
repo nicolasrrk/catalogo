@@ -42,10 +42,11 @@ El orden y las promociones viven en `catalog_product_merchandising`, una tabla s
 ## Ordenar productos y crear promociones
 
 1. Iniciá sesión desde **Acceso administrativo**.
-2. En **Ordenar y promocionar**, arrastrá productos o usá las flechas para cambiar su posición.
-3. Activá **Destacado** para mostrar un producto en esa sección.
-4. Activá **Oferta** y escribí un precio menor al normal.
-5. Presioná **Guardar cambios**. La vidriera se actualiza en tiempo real.
+2. En **Ordenar y promocionar**, elegí **Todos**, **Destacados** u **Ofertas** para ordenar cada grupo por separado.
+3. Arrastrá productos o usá las flechas para cambiar su posición.
+4. Activá **Destacado** para mostrar un producto en esa sección.
+5. Activá **Oferta** y escribí un precio menor al normal.
+6. Presioná **Guardar cambios**. La vidriera se actualiza en tiempo real.
 
 ## Agregar fotos como administrador
 

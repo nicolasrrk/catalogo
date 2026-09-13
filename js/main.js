@@ -23,6 +23,7 @@
   let imageRecords = [];
   let merchandisingRecords = [];
   let adminOrder = [];
+  let activeAdminScope = "all";
   let adminMerchDirty = false;
   let draggedProductSlug = null;
   let activeCategory = "Todos";
@@ -418,10 +419,34 @@
     });
   }
 
+  function matchesAdminScope(product) {
+    if (activeAdminScope === "featured") return product.is_featured;
+    if (activeAdminScope === "offers") return product.offer_price != null;
+    return true;
+  }
+
+  function adminScopeSlugs() {
+    return adminOrder.filter((slug) => {
+      const product = products.find((item) => item.slug === slug);
+      return product && matchesAdminScope(product);
+    });
+  }
+
+  function setAdminScope(scope) {
+    activeAdminScope = ["all", "featured", "offers"].includes(scope) ? scope : "all";
+    document.querySelectorAll("[data-admin-scope]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.adminScope === activeAdminScope));
+    });
+    renderAdminMerchandising();
+  }
+
   function moveAdminProduct(slug, direction) {
+    const scopedSlugs = adminScopeSlugs();
+    const scopedIndex = scopedSlugs.indexOf(slug);
+    const targetSlug = scopedSlugs[scopedIndex + direction];
     const from = adminOrder.indexOf(slug);
-    const to = from + direction;
-    if (from < 0 || to < 0 || to >= adminOrder.length) return;
+    const to = adminOrder.indexOf(targetSlug);
+    if (from < 0 || to < 0) return;
     [adminOrder[from], adminOrder[to]] = [adminOrder[to], adminOrder[from]];
     normalizeAdminPositions();
     setAdminMerchDirty(true);
@@ -435,8 +460,7 @@
     const sourceIndex = adminOrder.indexOf(sourceSlug);
     const targetIndex = adminOrder.indexOf(targetSlug);
     if (sourceIndex < 0 || targetIndex < 0) return;
-    adminOrder.splice(sourceIndex, 1);
-    adminOrder.splice(targetIndex, 0, sourceSlug);
+    [adminOrder[sourceIndex], adminOrder[targetIndex]] = [adminOrder[targetIndex], adminOrder[sourceIndex]];
     normalizeAdminPositions();
     setAdminMerchDirty(true);
     renderAdminMerchandising();
@@ -450,15 +474,21 @@
     else adminOrder = [...adminOrder.filter((slug) => validSlugs.has(slug)), ...products.map((product) => product.slug).filter((slug) => !adminOrder.includes(slug))];
 
     const query = normalize($("#admin-product-search")?.value);
+    const scopedSlugs = adminScopeSlugs();
     const orderedProducts = adminOrder
       .map((slug) => products.find((product) => product.slug === slug))
       .filter(Boolean)
+      .filter(matchesAdminScope)
       .filter((product) => !query || normalize(`${product.name} ${product.category}`).includes(query));
 
     if (!orderedProducts.length) {
       const empty = document.createElement("p");
       empty.className = "admin-image-empty";
-      empty.textContent = "No encontramos productos con esa búsqueda.";
+      empty.textContent = query
+        ? "No encontramos productos con esa búsqueda."
+        : activeAdminScope === "featured"
+          ? "Todavía no marcaste productos destacados."
+          : "Todavía no configuraste productos en oferta.";
       container.replaceChildren(empty);
       return;
     }
@@ -481,14 +511,14 @@
       up.className = "admin-order-button";
       up.textContent = "↑";
       up.setAttribute("aria-label", `Subir ${displayName(product.name)}`);
-      up.disabled = adminOrder[0] === product.slug;
+      up.disabled = scopedSlugs[0] === product.slug;
       up.addEventListener("click", () => moveAdminProduct(product.slug, -1));
       const down = document.createElement("button");
       down.type = "button";
       down.className = "admin-order-button";
       down.textContent = "↓";
       down.setAttribute("aria-label", `Bajar ${displayName(product.name)}`);
-      down.disabled = adminOrder.at(-1) === product.slug;
+      down.disabled = scopedSlugs.at(-1) === product.slug;
       down.addEventListener("click", () => moveAdminProduct(product.slug, 1));
       order.append(handle, up, down);
 
@@ -508,6 +538,7 @@
       featured.addEventListener("change", () => {
         product.is_featured = featured.checked;
         setAdminMerchDirty(true);
+        if (activeAdminScope === "featured") renderAdminMerchandising();
       });
       featuredLabel.append(featured, document.createTextNode(" Destacado"));
 
@@ -533,6 +564,7 @@
         product.offer_price = offerToggle.checked ? (offerPrice.value ? Number(offerPrice.value) : 0) : null;
         setAdminMerchDirty(true);
         if (offerToggle.checked) offerPrice.focus();
+        if (!offerToggle.checked && activeAdminScope === "offers") renderAdminMerchandising();
       });
       offerPrice.addEventListener("input", () => {
         product.offer_price = offerPrice.value ? Number(offerPrice.value) : 0;
@@ -785,6 +817,7 @@
     await refreshAdminDashboard();
     $("#admin-login").hidden = true;
     $("#admin-dashboard").hidden = false;
+    setAdminScope("all");
     setAdminMerchDirty(false);
     renderAdminMerchandising(true);
     renderAdminProductOptions();
@@ -828,6 +861,7 @@
     $("#admin-image-form").reset();
     $("#admin-image-status").textContent = "";
     $("#admin-product-search").value = "";
+    setAdminScope("all");
     setAdminMerchDirty(false);
     updateAdminFileSummary();
     $("#admin-email").focus();
@@ -851,6 +885,9 @@
     $("#admin-image-product").addEventListener("change", renderAdminImages);
     $("#admin-image-files").addEventListener("change", updateAdminFileSummary);
     $("#admin-product-search").addEventListener("input", () => renderAdminMerchandising());
+    document.querySelectorAll("[data-admin-scope]").forEach((button) => {
+      button.addEventListener("click", () => setAdminScope(button.dataset.adminScope));
+    });
     $("#admin-merch-save").addEventListener("click", saveAdminMerchandising);
     $("#admin-logout").addEventListener("click", handleAdminLogout);
     [productDialog, adminDialog].forEach((dialog) => dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); }));
