@@ -52,7 +52,7 @@ h1, h2, h3, p { text-wrap: pretty; }
 h1, h2, h3 { font-family: var(--font-display); letter-spacing: -.045em; }
 h1 { max-width: 10ch; margin: 0; font-size: clamp(3.25rem, 9vw, 7.4rem); line-height: .9; font-weight: 800; }
 h2 { margin: 0; font-size: clamp(2.25rem, 5vw, 4.25rem); line-height: 1; }
-.hero { position: relative; min-height: clamp(49rem, 100svh, 61rem); display: grid; align-items: end; padding: 13rem 0 2rem; overflow: hidden; color: var(--ivory); background: url("../assets/hero-termos-genstore.png") 61% center / cover no-repeat; }
+.hero { position: relative; min-height: clamp(49rem, 100svh, 61rem); display: grid; align-items: end; padding: 13rem 0 2rem; overflow: hidden; color: var(--ivory); background: url("../assets/hero-mate-atardecer.png") 25% center / cover no-repeat; }
 .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,7,6,.16) 0%, rgba(8,7,6,.08) 26%, rgba(8,7,6,.68) 100%); pointer-events: none; }
 .hero-grid { position: relative; z-index: 1; }
 .hero-copy { width: 100%; padding: clamp(1.35rem, 4vw, 2.6rem); border: 1px solid rgba(255,255,255,.15); border-radius: 1.5rem; background: rgba(12,11,10,.68); backdrop-filter: blur(10px); box-shadow: 0 22px 60px rgba(0,0,0,.24); }
