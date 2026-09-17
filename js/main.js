@@ -340,9 +340,16 @@
   function openProduct(product) {
     const images = productImages(product);
     const dialogImage = $("#dialog-image");
+    const gallery = productDialog.querySelector(".dialog-gallery");
+    const setImageRatio = () => {
+      if (!dialogImage.naturalWidth || !dialogImage.naturalHeight) return;
+      gallery.style.setProperty("--dialog-image-ratio", `${dialogImage.naturalWidth} / ${dialogImage.naturalHeight}`);
+    };
+    dialogImage.onload = setImageRatio;
     dialogImage.src = images[0]?.src || placeholderSvgData(product);
     dialogImage.alt = images[0]?.alt || "";
     dialogImage.classList.toggle("is-fallback", !images.length);
+    if (dialogImage.complete) setImageRatio();
     $("#dialog-image-count").textContent = images.length ? `Foto 1 de ${images.length}` : "Foto de referencia";
     $("#dialog-category").textContent = `Catálogo GenStore · ${product.category}`;
     $("#dialog-title").textContent = displayName(product.name);
@@ -365,7 +372,6 @@
     buy.textContent = product.stock > 0 ? "Comprar por WhatsApp" : "Consultar próximo ingreso";
 
     const thumbs = $("#dialog-thumbs");
-    const gallery = productDialog.querySelector(".dialog-gallery");
     const hasMultipleImages = images.length > 1;
     thumbs.hidden = !hasMultipleImages;
     gallery.classList.toggle("has-thumbnails", hasMultipleImages);
@@ -381,8 +387,10 @@
       thumb.alt = "";
       button.appendChild(thumb);
       button.addEventListener("click", () => {
+        dialogImage.onload = setImageRatio;
         dialogImage.src = item.src;
         dialogImage.alt = item.alt;
+        if (dialogImage.complete) setImageRatio();
         $("#dialog-image-count").textContent = `Foto ${index + 1} de ${images.length}`;
         thumbs.querySelectorAll("button").forEach((item) => item.setAttribute("aria-current", String(item === button)));
       });

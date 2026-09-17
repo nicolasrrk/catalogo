@@ -155,7 +155,7 @@ dialog::backdrop { background: rgba(27,25,23,.68); backdrop-filter: blur(6px); }
 .dialog-close { position: absolute; z-index: 2; top: .85rem; right: .85rem; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid var(--sand); border-radius: 50%; background: rgba(244,241,236,.92); color: var(--ink); cursor: pointer; }
 .product-dialog { width: min(calc(100% - 1.5rem), 79rem); max-height: calc(100dvh - 1.5rem); overflow: auto; border-radius: 1.35rem; background: var(--white); }
 .dialog-layout { display: grid; min-height: min(44rem, calc(100dvh - 1.5rem)); }
-.dialog-gallery { min-width: 0; display: grid; grid-template-areas: "main"; gap: 0; padding: .75rem; background: var(--ivory-deep); }
+.dialog-gallery { --dialog-image-ratio: 4 / 5; min-width: 0; display: grid; grid-template-areas: "main"; gap: 0; padding: .75rem; background: var(--ivory-deep); }
 .dialog-gallery.has-thumbnails { grid-template-areas: "main" "thumbs"; gap: .75rem; }
 .dialog-main-image { grid-area: main; position: relative; aspect-ratio: 4/5; display: grid; place-items: center; overflow: hidden; border-radius: .85rem; background: var(--white); }
 .dialog-main-image img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; padding: .5rem; object-fit: contain; object-position: center; }
@@ -261,7 +261,7 @@ dialog::backdrop { background: rgba(27,25,23,.68); backdrop-filter: blur(6px); }
   .product-dialog .dialog-layout { grid-template-columns: minmax(0, 1.18fr) minmax(22rem, .82fr); }
   .product-dialog .dialog-gallery { grid-template-columns: minmax(0, 1fr); grid-template-areas: "main"; align-items: start; padding: 1.25rem; }
   .product-dialog .dialog-gallery.has-thumbnails { grid-template-columns: 4.5rem minmax(0, 1fr); grid-template-areas: "thumbs main"; gap: .9rem; }
-  .product-dialog .dialog-main-image { height: min(42rem, calc(100dvh - 5rem)); aspect-ratio: auto; border-radius: .9rem; }
+  .product-dialog .dialog-main-image { width: auto; max-width: 100%; height: min(42rem, calc(100dvh - 5rem)); justify-self: center; aspect-ratio: var(--dialog-image-ratio); border-radius: .9rem; }
   .product-dialog .dialog-thumbs { flex-direction: column; max-height: min(42rem, calc(100dvh - 5rem)); overflow-x: hidden; overflow-y: auto; }
   .product-dialog .dialog-copy { padding: clamp(2rem, 4vw, 3.5rem); border-left: 1px solid var(--sand); }
 }
