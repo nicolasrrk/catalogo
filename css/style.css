@@ -294,9 +294,9 @@ dialog::backdrop { background: rgba(27,25,23,.68); backdrop-filter: blur(6px); }
   dialog { width: min(calc(100% - .75rem), 67rem); max-height: calc(100dvh - .75rem); }
   .product-dialog { width: 100%; max-height: 100dvh; min-height: 100dvh; border-radius: 0; }
   .product-dialog .dialog-layout { min-height: 100dvh; }
-  .product-dialog .dialog-gallery { gap: .6rem; padding: .5rem; }
-  .product-dialog .dialog-main-image { border-radius: .5rem; }
-  .product-dialog .dialog-main-image img { padding: .25rem; }
+  .product-dialog .dialog-gallery { gap: .6rem; padding: .5rem; align-items: start; }
+  .product-dialog .dialog-main-image { width: auto; max-width: calc(100% - 1rem); height: min(62dvh, 32rem); justify-self: center; aspect-ratio: var(--dialog-image-ratio); border-radius: .5rem; background: transparent; }
+  .product-dialog .dialog-main-image img { padding: 0; }
   .product-dialog .dialog-copy { padding: 1.4rem 1rem 2rem; }
   .product-dialog .dialog-thumbs { padding: .1rem 0 .25rem; }
 }
