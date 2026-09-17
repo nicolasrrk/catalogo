@@ -343,7 +343,8 @@
     dialogImage.src = images[0]?.src || placeholderSvgData(product);
     dialogImage.alt = images[0]?.alt || "";
     dialogImage.classList.toggle("is-fallback", !images.length);
-    $("#dialog-category").textContent = product.category;
+    $("#dialog-image-count").textContent = images.length ? `Foto 1 de ${images.length}` : "Foto de referencia";
+    $("#dialog-category").textContent = `Catálogo GenStore · ${product.category}`;
     $("#dialog-title").textContent = displayName(product.name);
     $("#dialog-description").textContent = productDescription(product);
     const dialogPrice = $("#dialog-price");
@@ -364,6 +365,10 @@
     buy.textContent = product.stock > 0 ? "Comprar por WhatsApp" : "Consultar próximo ingreso";
 
     const thumbs = $("#dialog-thumbs");
+    const gallery = productDialog.querySelector(".dialog-gallery");
+    const hasMultipleImages = images.length > 1;
+    thumbs.hidden = !hasMultipleImages;
+    gallery.classList.toggle("has-thumbnails", hasMultipleImages);
     thumbs.replaceChildren();
     images.forEach((item, index) => {
       const button = document.createElement("button");
@@ -378,6 +383,7 @@
       button.addEventListener("click", () => {
         dialogImage.src = item.src;
         dialogImage.alt = item.alt;
+        $("#dialog-image-count").textContent = `Foto ${index + 1} de ${images.length}`;
         thumbs.querySelectorAll("button").forEach((item) => item.setAttribute("aria-current", String(item === button)));
       });
       thumbs.appendChild(button);
