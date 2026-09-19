@@ -61,6 +61,10 @@
     return media ? media.images.map((src) => ({ src, alt: displayName(product.name) })) : [];
   }
 
+  function publicProducts() {
+    return products.filter((product) => productImages(product).length > 0);
+  }
+
   function productDescription(product) {
     return CATEGORY_DESCRIPTIONS[product.category] || "Un producto seleccionado por GenStore para acompañarte todos los días.";
   }
@@ -95,7 +99,7 @@
   }
 
   function renderCategories() {
-    const categories = ["Todos", ...new Set(products.map((product) => product.category || "Otros"))];
+    const categories = ["Todos", ...new Set(publicProducts().map((product) => product.category || "Otros"))];
     filterRow.replaceChildren();
     categories.forEach((category) => {
       const button = document.createElement("button");
@@ -187,7 +191,7 @@
 
   function filteredProducts() {
     const query = normalize(searchInput.value);
-    return products.filter((product) => {
+    return publicProducts().filter((product) => {
       const matchesQuery = !query || normalize(`${product.name} ${product.category}`).includes(query);
       const matchesCategory = activeCategory === "Todos" || product.category === activeCategory;
       const matchesStock = !stockOnly.checked || product.stock > 0;
@@ -209,8 +213,9 @@
   }
 
   function renderCuratedSections() {
-    const featured = products.filter((product) => product.is_featured && product.stock > 0).slice(0, 8);
-    const offers = products.filter((product) => hasOffer(product) && product.stock > 0).slice(0, 8);
+    const availableProducts = publicProducts();
+    const featured = availableProducts.filter((product) => product.is_featured && product.stock > 0).slice(0, 8);
+    const offers = availableProducts.filter((product) => hasOffer(product) && product.stock > 0).slice(0, 8);
     const featuredSection = $("#destacados");
     const offersSection = $("#ofertas");
     featuredSection.hidden = featured.length === 0;
@@ -306,7 +311,7 @@
       dataStatus.textContent = latest ? `Actualizado ${new Intl.DateTimeFormat("es-AR", { dateStyle: "short", timeStyle: "short" }).format(new Date(latest))}` : "Stock conectado";
       if (imageResult.error) dataStatus.textContent += " · Fotos locales";
     }
-    if (activeCategory !== "Todos" && !products.some((item) => item.category === activeCategory)) activeCategory = "Todos";
+    if (activeCategory !== "Todos" && !publicProducts().some((item) => item.category === activeCategory)) activeCategory = "Todos";
     renderCategories();
     renderProducts();
   }
